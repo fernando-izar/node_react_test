@@ -1,0 +1,16 @@
+{
+  "name": "node-react-test",
+  "private": true,
+  "workspaces": [
+    "api",
+    "app"
+  ],
+  "scripts": {
+    "dev": "concurrently \"yarn workspace api dev\" \"yarn workspace app dev\"",
+    "api": "yarn workspace api dev",
+    "app": "yarn workspace app dev"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
