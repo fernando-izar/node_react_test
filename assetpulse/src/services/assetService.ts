@@ -1,5 +1,6 @@
-import { assets, events } from "../store";
+import { assets, events, buildings } from "../store";
 import { EventType, AssetEvent } from "../models";
+import { emitEvent } from "../socket";
 
 export function ingestEvent(
   assetId: string,
@@ -16,6 +17,14 @@ export function ingestEvent(
 
   events.push(event);
   checkCriticalThreshold(assetId);
+
+  const asset = assets.find((a) => a.id === assetId);
+  if (asset) {
+    const building = buildings.find((b) => b.id === asset.buildingId);
+    if (building) {
+      emitEvent(building.id, { event, asset });
+    }
+  }
 
   return event;
 }
